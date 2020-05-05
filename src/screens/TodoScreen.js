@@ -6,14 +6,47 @@ const TodoScreen = ({ selectedTodo, setTodoId }) => {
     setTodoId(null);
   };
 
+  const onPressDeleteHandler = () => {
+    //delete todo
+  };
+
   return (
     <View>
-      <Text>{selectedTodo.title}</Text>
-      <Button title="Назад" onPress={onPressBackHandler} />
+      <Text style={styles.text}>{selectedTodo.title}</Text>
+      <View style={styles.buttonBox}>
+        <View style={styles.button}>
+          <Button title="Назад" onPress={onPressBackHandler} color="#757575" />
+        </View>
+        <View style={styles.button}>
+          <Button
+            title="Удалить"
+            onPress={onPressDeleteHandler}
+            color="#e53935"
+          />
+        </View>
+      </View>
     </View>
   );
 };
 
 export default TodoScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  buttonBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  text: {
+    backgroundColor: "white",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRadius: 3,
+    borderColor: "#C7C7C7",
+    paddingHorizontal: 5,
+    paddingVertical: 10,
+    marginBottom: 30,
+  },
+  button: {
+    width: "45%",
+  },
+});
