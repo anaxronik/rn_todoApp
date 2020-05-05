@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 
 const AddTodo = ({ onSubmit }) => {
-  const presshandler = (params) => {
-    onSubmit("asdsd");
+  const [value, setValue] = useState("");
+  const [empty, setEmpty] = useState(false);
+
+  const presshandler = () => {
+    if (value.trim()) {
+      onSubmit(value);
+      setValue("");
+    } else {
+      //error
+      
+    }
+  };
+
+  const onChangeTextHandler = (text) => {
+    setValue(text);
   };
 
   return (
     <View style={styles.block}>
-      <TextInput style={styles.input} />
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeTextHandler}
+        value={value}
+        placeholder="Пиши сюды"
+      />
       <Button title="+ADD" onPress={presshandler} />
     </View>
   );
