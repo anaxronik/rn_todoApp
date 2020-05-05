@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { THEME } from "../theme";
 
 const Todo = ({ title, id, deleteTodo, setTodoId }) => {
   const onPressHandler = () => {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 1,
     borderRadius: 3,
-    borderColor: "#C7C7C7",
+    borderColor: THEME.MAIN_COLOR,
     paddingHorizontal: 5,
     paddingVertical: 10,
     marginTop: 10,

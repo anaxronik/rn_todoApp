@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
 import Navbar from "./src/components/Navbar";
 import MainScreen from "./src/screens/MainScreen";
 import TodoScreen from "./src/screens/TodoScreen";
+import { THEME } from "./src/theme";
 
 export default function App() {
   const testTodos = [
@@ -62,6 +63,6 @@ const styles = StyleSheet.create({
   },
   app: {
     flex: 1,
-    backgroundColor: "#F3F3F3",
+    backgroundColor: THEME.BG_GREY,
   },
 });
