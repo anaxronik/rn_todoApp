@@ -21,6 +21,10 @@ export default function App() {
     setTodos([newTodo, ...todos]);
   };
 
+  const deleteTodo = (id) => {
+    setTodos((prevState) => prevState.filter((todo) => todo.id != id));
+  };
+
   return (
     <View style={styles.app}>
       <Navbar title="To do app"></Navbar>
@@ -29,7 +33,12 @@ export default function App() {
         <FlatList
           data={todos}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <Todo title={item.title} />}
+          renderItem={({ item }) => (
+            <Todo 
+            title={item.title} 
+            id={item.id} 
+              deleteTodo={deleteTodo} />
+          )}
         />
       </View>
     </View>
