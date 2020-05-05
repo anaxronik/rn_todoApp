@@ -12,7 +12,7 @@ export default function App() {
   ];
 
   const [todos, setTodos] = useState([]);
-  const [todoId, setTodoId] = useState('null');
+  const [todoId, setTodoId] = useState(null);
 
   const addTodo = (title) => {
     const newTodo = {
@@ -27,11 +27,23 @@ export default function App() {
   };
 
   let pageContent = (
-    <MainScreen todos={todos} addTodo={addTodo} deleteTodo={deleteTodo} />
+    <MainScreen
+      todos={todos}
+      addTodo={addTodo}
+      deleteTodo={deleteTodo}
+      setTodoId={setTodoId}
+    />
   );
 
   if (todoId) {
-    pageContent = <TodoScreen />;
+    const selectedTodo = todos.find((todo) => todo.id === todoId);
+    pageContent = (
+      <TodoScreen
+        setTodoId={setTodoId}
+        todoId={todoId}
+        selectedTodo={selectedTodo}
+      />
+    );
   }
 
   return (

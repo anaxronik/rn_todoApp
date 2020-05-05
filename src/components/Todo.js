@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
-const Todo = ({ title, id, deleteTodo }) => {
+const Todo = ({ title, id, deleteTodo, setTodoId }) => {
   const onPressHandler = () => {
-    console.log("onPressHandler", id);
+    setTodoId(id);
   };
 
   const onLongPressHandler = () => {

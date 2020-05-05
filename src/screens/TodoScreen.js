@@ -1,10 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 
-const TodoScreen = () => {
+const TodoScreen = ({ selectedTodo, setTodoId }) => {
+  const onPressBackHandler = () => {
+    setTodoId(null);
+  };
+
   return (
     <View>
-      <Text>TodoScreen</Text>
+      <Text>{selectedTodo.title}</Text>
+      <Button title="Назад" onPress={onPressBackHandler} />
     </View>
   );
 };
