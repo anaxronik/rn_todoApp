@@ -1,13 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 
-const TodoScreen = ({ selectedTodo, setTodoId }) => {
+const TodoScreen = ({ selectedTodo, setTodoId, deleteTodo }) => {
   const onPressBackHandler = () => {
     setTodoId(null);
   };
 
   const onPressDeleteHandler = () => {
-    //delete todo
+    deleteTodo(selectedTodo.id);
+    setTodoId(null);
   };
 
   return (

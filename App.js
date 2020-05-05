@@ -42,6 +42,7 @@ export default function App() {
         setTodoId={setTodoId}
         todoId={todoId}
         selectedTodo={selectedTodo}
+        deleteTodo={deleteTodo}
       />
     );
   }
