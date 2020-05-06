@@ -4,7 +4,7 @@ import { THEME } from "../theme";
 import AppCard from "../components/ui/AppCard";
 import EditModal from "../components/EditModal";
 
-const TodoScreen = ({ selectedTodo, setTodoId, deleteTodo }) => {
+const TodoScreen = ({ selectedTodo, setTodoId, deleteTodo, onSave }) => {
   const [modal, setModal] = useState(false);
 
   const onPressBackHandler = () => {
@@ -16,12 +16,19 @@ const TodoScreen = ({ selectedTodo, setTodoId, deleteTodo }) => {
     setTodoId(null);
   };
 
+  const saveHandler = (title) => {
+    onSave(selectedTodo.id, title);
+    setModal(false);
+  };
+
   return (
     <View>
       <EditModal
         visible={modal}
         onCancel={() => setModal(false)}
+        onSave={saveHandler}
         todo={selectedTodo}
+        value={selectedTodo.title}
       />
       <AppCard style={styles.card}>
         <Text style={styles.text}>{selectedTodo.title}</Text>

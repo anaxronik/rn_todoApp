@@ -1,15 +1,37 @@
-import React from "react";
-import { StyleSheet, Text, View, Button, Modal, TextInput } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Modal,
+  TextInput,
+  Alert,
+} from "react-native";
 import { THEME } from "../theme";
 
-const EditModal = ({ visible, onCancel, todo = "" }) => {
+const EditModal = ({ visible, onCancel, todo = "", value, onSave }) => {
+  const [title, setTitle] = useState(value);
+
+  const onSaveHandler = () => {
+    if (title.trim().length < 3) {
+      Alert.alert(
+        "Ошибка!",
+        `Минимальная длина 3 символа. Сейчас ${title.trim().length}`
+      );
+    } else {
+      onSave(title);
+    }
+  };
+
   return (
     <Modal visible={visible} animationType="slide">
       <View style={styles.wrap}>
         <Text>Редактирование текста</Text>
         <TextInput
           style={styles.textInput}
-          value={todo.title}
+          value={title}
+          onChangeText={setTitle}
           placeholder="Введите название"
           multiline={true}
         />
@@ -19,7 +41,11 @@ const EditModal = ({ visible, onCancel, todo = "" }) => {
             onPress={onCancel}
             color={THEME.DANGER_COLOR}
           />
-          <Button title="Сохранить" />
+          <Button
+            title="Сохранить"
+            onPress={onSaveHandler}
+            disabled={!title.trim()}
+          />
         </View>
       </View>
     </Modal>
