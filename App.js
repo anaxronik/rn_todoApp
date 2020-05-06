@@ -40,6 +40,7 @@ export default function App() {
         {
           text: "УДАЛИТЬ",
           onPress: () => {
+            setTodoId(null);
             setTodos((state) => state.filter((todo) => todo.id != id));
           },
         },
