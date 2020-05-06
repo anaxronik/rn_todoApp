@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { THEME } from "../theme";
+import AppCard from "../components/ui/AppCard";
 
 const TodoScreen = ({ selectedTodo, setTodoId, deleteTodo }) => {
   const onPressBackHandler = () => {
@@ -14,7 +15,10 @@ const TodoScreen = ({ selectedTodo, setTodoId, deleteTodo }) => {
 
   return (
     <View>
-      <Text style={styles.text}>{selectedTodo.title}</Text>
+      <AppCard style={styles.card}>
+        <Text style={styles.text}>{selectedTodo.title}</Text>
+        <Button title="EDIT" />
+      </AppCard>
       <View style={styles.buttonBox}>
         <View style={styles.button}>
           <Button
@@ -43,16 +47,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   text: {
-    backgroundColor: "white",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderRadius: 3,
-    borderColor: THEME.MAIN_COLOR,
-    paddingHorizontal: 5,
-    paddingVertical: 10,
-    marginBottom: 30,
+    fontSize: 22,
   },
   button: {
     width: "45%",
+  },
+  card: {
+    marginBottom: 20,
+    padding: 15,
   },
 });
