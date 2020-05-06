@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { THEME } from "../theme";
 import AppCard from "../components/ui/AppCard";
 import EditModal from "../components/EditModal";
+import AppButton from "../components/ui/AppButton";
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const TodoScreen = ({ selectedTodo, setTodoId, deleteTodo, onSave }) => {
   const [modal, setModal] = useState(false);
@@ -13,7 +17,6 @@ const TodoScreen = ({ selectedTodo, setTodoId, deleteTodo, onSave }) => {
 
   const onPressDeleteHandler = () => {
     deleteTodo(selectedTodo.id);
-    setTodoId(null);
   };
 
   const saveHandler = (title) => {
@@ -30,24 +33,22 @@ const TodoScreen = ({ selectedTodo, setTodoId, deleteTodo, onSave }) => {
         todo={selectedTodo}
         value={selectedTodo.title}
       />
-      <AppCard style={styles.card}>
-        <Text style={styles.text}>{selectedTodo.title}</Text>
-        <Button title="EDIT" onPress={() => setModal(true)} />
-      </AppCard>
+      <TouchableOpacity onPress={() => setModal(true)}>
+        <AppCard style={styles.card}>
+          <Text style={styles.text}>{selectedTodo.title}</Text>
+          <AntDesign name="edit" size={24} color={THEME.MAIN_COLOR} />
+        </AppCard>
+      </TouchableOpacity>
       <View style={styles.buttonBox}>
         <View style={styles.button}>
-          <Button
-            title="Назад"
-            onPress={onPressBackHandler}
-            color={THEME.BTN_GREY}
-          />
+          <AppButton color={THEME.BTN_GREY} onPress={onPressBackHandler}>
+            <FontAwesome5 name="backward" size={20} color="white" />
+          </AppButton>
         </View>
         <View style={styles.button}>
-          <Button
-            title="Удалить"
-            onPress={onPressDeleteHandler}
-            color={THEME.DANGER_COLOR}
-          />
+          <AppButton color={THEME.DANGER_COLOR} onPress={onPressDeleteHandler}>
+            <MaterialIcons name="delete-forever" size={20} color="white" />
+          </AppButton>
         </View>
       </View>
     </View>

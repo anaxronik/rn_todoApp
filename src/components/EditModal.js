@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Modal,
-  TextInput,
-  Alert,
-} from "react-native";
+import { StyleSheet, Text, View, Modal, TextInput, Alert } from "react-native";
 import { THEME } from "../theme";
+import AppButton from "./ui/AppButton";
 
 const EditModal = ({ visible, onCancel, todo = "", value, onSave }) => {
   const [title, setTitle] = useState(value);
@@ -36,16 +29,10 @@ const EditModal = ({ visible, onCancel, todo = "", value, onSave }) => {
           multiline={true}
         />
         <View style={styles.buttonBlock}>
-          <Button
-            title="Отменить"
-            onPress={onCancel}
-            color={THEME.DANGER_COLOR}
-          />
-          <Button
-            title="Сохранить"
-            onPress={onSaveHandler}
-            disabled={!title.trim()}
-          />
+          <AppButton onPress={onCancel} color={THEME.DANGER_COLOR}>
+            ОТМЕНИТЬ
+          </AppButton>
+          <AppButton onPress={onSaveHandler}>СОХРАНИТЬ</AppButton>
         </View>
       </View>
     </Modal>
