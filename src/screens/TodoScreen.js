@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { THEME } from "../theme";
 import AppCard from "../components/ui/AppCard";
 import EditModal from "../components/EditModal";
@@ -66,7 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
   button: {
-    width: "45%",
+    width: Dimensions.get("window").width / 2.2,
   },
   card: {
     marginBottom: 20,
