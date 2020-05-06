@@ -104,8 +104,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
-    paddingVertical: 20,
+    paddingHorizontal: THEME.PADDING_HORIZONTAL,
+    paddingVertical: THEME.PADDING_VERTICAL,
   },
   app: {
     flex: 1,
