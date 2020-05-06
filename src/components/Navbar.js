@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { THEME } from "../theme";
+import { AppTextBold } from "./ui/AppTextBold";
 
 const Navbar = ({ title = "navbar" }) => {
   return (
     <View style={styles.navbar}>
-      <Text style={styles.text}>{title}</Text>
+      <AppTextBold style={styles.text}>{title}</AppTextBold>
     </View>
   );
 };
@@ -21,8 +22,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   text: {
+    fontSize: 28,
     color: "white",
-    fontSize: 20,
-    fontFamily: "roboto-bold",
   },
 });
