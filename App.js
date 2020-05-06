@@ -5,6 +5,7 @@ import Navbar from "./src/components/Navbar";
 import MainScreen from "./src/screens/MainScreen";
 import TodoScreen from "./src/screens/TodoScreen";
 import { THEME } from "./src/theme";
+import { AppLoading } from "expo";
 
 async function loadAplication() {
   await Font.loadAsync({
@@ -14,14 +15,9 @@ async function loadAplication() {
 }
 
 export default function App() {
-  const testTodos = [
-    { id: 1, title: "asdsd" },
-    { id: 2, title: "asasdsaddsd" },
-    { id: 3, title: "asdasdsdsd" },
-  ];
-
   const [todos, setTodos] = useState([]);
   const [todoId, setTodoId] = useState(null);
+  const [isReady, setIsReady] = useState(false);
 
   const addTodo = (title) => {
     const newTodo = {
@@ -81,6 +77,18 @@ export default function App() {
         selectedTodo={selectedTodo}
         deleteTodo={deleteTodo}
         onSave={updateTodo}
+      />
+    );
+  }
+
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={loadAplication}
+        onError={(err) => console.log(err)}
+        onFinish={() => {
+          setIsReady(true);
+        }}
       />
     );
   }
