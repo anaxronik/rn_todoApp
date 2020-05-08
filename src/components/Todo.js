@@ -9,7 +9,6 @@ const Todo = ({ title, id, deleteTodo, setTodoId }) => {
   };
 
   const onLongPressHandler = () => {
-    console.log("onLongPressHandler", id);
     deleteTodo(id);
   };
 

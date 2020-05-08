@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,21 +13,25 @@ import AppButton from "../components/ui/AppButton";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { TodoContext } from "../context/todoContext";
 
-const TodoScreen = ({ selectedTodo, setTodoId, deleteTodo, onSave }) => {
+const TodoScreen = () => {
+  const todoContext = useContext(TodoContext);
   const [modal, setModal] = useState(false);
+  const [title, setTitle] = useState(todoContext.selectedTodo.title);
 
   const onPressBackHandler = () => {
-    setTodoId(null);
+    todoContext.clearSelectedTodo();
   };
 
   const onPressDeleteHandler = () => {
-    deleteTodo(selectedTodo.id);
+    todoContext.deleteTodo(todoContext.selectedTodoID);
   };
 
-  const saveHandler = (title) => {
-    onSave(selectedTodo.id, title);
+  const saveHandler = (id, title) => {
+    todoContext.editTodo(id, title);
     setModal(false);
+    setTitle(`${todoContext.selectedTodo.title}`);
   };
 
   return (
@@ -36,12 +40,11 @@ const TodoScreen = ({ selectedTodo, setTodoId, deleteTodo, onSave }) => {
         visible={modal}
         onCancel={() => setModal(false)}
         onSave={saveHandler}
-        todo={selectedTodo}
-        value={selectedTodo.title}
+        value={todoContext.selectedTodo.title}
       />
       <TouchableOpacity onPress={() => setModal(true)}>
         <AppCard style={styles.card}>
-          <Text style={styles.text}>{selectedTodo.title}</Text>
+          <Text style={styles.text}>{title}</Text>
           <AntDesign name="edit" size={24} color={THEME.MAIN_COLOR} />
         </AppCard>
       </TouchableOpacity>

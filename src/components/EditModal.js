@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, Modal, TextInput, Alert } from "react-native";
 import { THEME } from "../theme";
 import AppButton from "./ui/AppButton";
+import { TodoContext } from "../context/todoContext";
 
-const EditModal = ({ visible, onCancel, todo = "", value, onSave }) => {
+const EditModal = ({ visible, onCancel, value, onSave }) => {
+  const todoContext = useContext(TodoContext);
+
   const [title, setTitle] = useState(value);
 
   const onSaveHandler = () => {
@@ -13,7 +16,7 @@ const EditModal = ({ visible, onCancel, todo = "", value, onSave }) => {
         `Минимальная длина 3 символа. Сейчас ${title.trim().length}`
       );
     } else {
-      onSave(title);
+      onSave(todoContext.selectedTodo.id, title);
     }
   };
 

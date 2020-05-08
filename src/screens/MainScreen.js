@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Image,
-  Dimensions,
-} from "react-native";
+import React, { useState, useEffect, useContext } from "react";
+import { StyleSheet, View, FlatList, Image, Dimensions } from "react-native";
 import AddTodo from "../components/AddTodo";
 import Todo from "../components/Todo";
 import { THEME } from "../theme";
+import { TodoContext } from "../context/todoContext";
 
-const MainScreen = ({ deleteTodo, todos, addTodo, setTodoId }) => {
+const MainScreen = () => {
+  const todoContext = useContext(TodoContext);
   const [deviceWidth, setDeviceWidth] = useState(
     Dimensions.get("window").width - THEME.PADDING_HORIZONTAL * 2
   );
@@ -32,20 +27,22 @@ const MainScreen = ({ deleteTodo, todos, addTodo, setTodoId }) => {
   let content = (
     <View style={{ width: deviceWidth }}>
       <FlatList
-        data={todos}
+        data={todoContext.todos}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Todo
             title={item.title}
             id={item.id}
-            deleteTodo={deleteTodo}
-            setTodoId={setTodoId}
+            deleteTodo={todoContext.deleteTodo}
+            setTodoId={todoContext.setSelectedTodo}
           />
         )}
       />
     </View>
   );
-  if (!todos.length) {
+
+  // show img while not todos
+  if (!todoContext.todos.length) {
     content = (
       <View style={styles.imgWrap}>
         <Image
@@ -55,9 +52,10 @@ const MainScreen = ({ deleteTodo, todos, addTodo, setTodoId }) => {
       </View>
     );
   }
+
   return (
     <View>
-      <AddTodo onSubmit={addTodo}></AddTodo>
+      <AddTodo onSubmit={todoContext.addTodo}></AddTodo>
       {content}
     </View>
   );

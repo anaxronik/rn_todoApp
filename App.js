@@ -6,7 +6,10 @@ import MainScreen from "./src/screens/MainScreen";
 import TodoScreen from "./src/screens/TodoScreen";
 import { THEME } from "./src/theme";
 import { AppLoading } from "expo";
+import { MainLayout } from "./MainLayout";
+import { TodoContextProvider } from "./src/context/todoContext";
 
+// preloader fonts function
 async function loadAplication() {
   await Font.loadAsync({
     "roboto-regular": require("./assets/fonts/Roboto-Regular.ttf"),
@@ -15,73 +18,9 @@ async function loadAplication() {
 }
 
 export default function App() {
-  const [todos, setTodos] = useState([]);
-  const [todoId, setTodoId] = useState(null);
   const [isReady, setIsReady] = useState(false);
 
-  const addTodo = (title) => {
-    const newTodo = {
-      id: Date.now().toString(),
-      title: title,
-    };
-    setTodos([newTodo, ...todos]);
-  };
-
-  const deleteTodo = (id) => {
-    const todo = todos.find((t) => t.id === id);
-    Alert.alert(
-      "Удаление элемента",
-      `Вы уверены, что хотите удалить ${todo.title}`,
-      [
-        {
-          text: "Отмена",
-          style: "cancel",
-        },
-        {
-          text: "УДАЛИТЬ",
-          onPress: () => {
-            setTodoId(null);
-            setTodos((state) => state.filter((todo) => todo.id != id));
-          },
-        },
-      ],
-      { cancelable: true }
-    );
-  };
-
-  const updateTodo = (id, title) => {
-    setTodos((state) =>
-      state.map((todo) => {
-        if (todo.id === id) {
-          todo.title = title;
-        }
-        return todo;
-      })
-    );
-  };
-
-  let pageContent = (
-    <MainScreen
-      todos={todos}
-      addTodo={addTodo}
-      deleteTodo={deleteTodo}
-      setTodoId={setTodoId}
-    />
-  );
-
-  if (todoId) {
-    const selectedTodo = todos.find((todo) => todo.id === todoId);
-    pageContent = (
-      <TodoScreen
-        setTodoId={setTodoId}
-        todoId={todoId}
-        selectedTodo={selectedTodo}
-        deleteTodo={deleteTodo}
-        onSave={updateTodo}
-      />
-    );
-  }
-
+  // start preloader function when app started
   if (!isReady) {
     return (
       <AppLoading
@@ -95,20 +34,8 @@ export default function App() {
   }
 
   return (
-    <View style={styles.app}>
-      <Navbar title="To do app"></Navbar>
-      <View style={styles.container}>{pageContent}</View>
-    </View>
+    <TodoContextProvider>
+      <MainLayout />
+    </TodoContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: THEME.PADDING_HORIZONTAL,
-    paddingVertical: THEME.PADDING_VERTICAL,
-  },
-  app: {
-    flex: 1,
-    backgroundColor: THEME.BG_GREY,
-  },
-});
