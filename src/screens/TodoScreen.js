@@ -25,7 +25,7 @@ const TodoScreen = () => {
   };
 
   const onPressDeleteHandler = () => {
-    todoContext.deleteTodo(todoContext.selectedTodoID);
+    todoContext.deleteTodo(todoContext.selectedTodo.id);
   };
 
   const saveHandler = (id, title) => {
