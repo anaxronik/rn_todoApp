@@ -11,6 +11,12 @@ const MainScreen = () => {
     Dimensions.get("window").width - THEME.PADDING_HORIZONTAL * 2
   );
 
+  // ~ component did mounted
+  useEffect(() => {
+    // fetch data from server
+    todoContext.fetchTodos();
+  }, []);
+
   useEffect(() => {
     const update = () => {
       const width =

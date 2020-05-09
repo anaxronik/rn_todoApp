@@ -10,18 +10,31 @@ export const EDIT_TODO = "EDIT_TODO";
 export const DELETE_TODO = "DELETE_TODO";
 export const SET_SELECTED_TODO = "SET_SELECTED_TODO";
 export const CLEAR_SELECTED_TODO = "CLEAR_SELECTED_TODO";
+export const FETCH_TODOS = "FETCH_TODOS";
 
 // initial state
 const initialState = {
   selectedTodo: null,
-  todos: [
-    { id: 1, title: "Первое дело" },
-    { id: 2, title: "Второе дело" },
-  ],
+  todos: [],
 };
 
 export const TodoContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const fetchTodos = async () => {
+    const response = await fetch(
+      "https://rn-todoapp-54dc2.firebaseio.com/todos.json",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    const data = await response.json();
+    const fetchedTodos = Object.keys(data).map((key) => {
+      return { id: key, title: data[key].title };
+    });
+    dispatch({ type: FETCH_TODOS, fetchedTodos });
+  };
 
   const addTodo = async (title) => {
     const response = await fetch(
@@ -33,7 +46,7 @@ export const TodoContextProvider = ({ children }) => {
       }
     );
     const data = await response.json();
-    dispatch({ type: ADD_TODO, id, title: data.name });
+    dispatch({ type: ADD_TODO, id: data.name, title });
   };
 
   const editTodo = (id, title) => {
@@ -79,6 +92,7 @@ export const TodoContextProvider = ({ children }) => {
         deleteTodo,
         clearSelectedTodo,
         editTodo,
+        fetchTodos,
       }}
     >
       {children}
@@ -132,6 +146,12 @@ const reducer = (state, action) => {
           }
           return todo;
         }),
+      };
+
+    case FETCH_TODOS:
+      return {
+        ...state,
+        todos: action.fetchedTodos,
       };
   }
 };
