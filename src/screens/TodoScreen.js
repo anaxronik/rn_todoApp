@@ -31,7 +31,7 @@ const TodoScreen = () => {
   const saveHandler = (id, title) => {
     todoContext.editTodo(id, title);
     setModal(false);
-    setTitle(`${todoContext.selectedTodo.title}`);
+    setTitle(title);
   };
 
   return (
