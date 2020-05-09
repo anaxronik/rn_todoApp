@@ -64,7 +64,14 @@ export const TodoContextProvider = ({ children }) => {
         },
         {
           text: "УДАЛИТЬ",
-          onPress: () => {
+          onPress: async () => {
+            await fetch(
+              `https://rn-todoapp-54dc2.firebaseio.com/todos/${id}.json`,
+              {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+              }
+            );
             dispatch({ type: CLEAR_SELECTED_TODO });
             dispatch({ type: DELETE_TODO, id });
           },
