@@ -49,7 +49,12 @@ export const TodoContextProvider = ({ children }) => {
     dispatch({ type: ADD_TODO, id: data.name, title });
   };
 
-  const editTodo = (id, title) => {
+  const editTodo = async (id, title) => {
+    await fetch(`https://rn-todoapp-54dc2.firebaseio.com/todos/${id}.json`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title }),
+    });
     dispatch({ type: EDIT_TODO, id, title });
   };
 
@@ -144,7 +149,6 @@ const reducer = (state, action) => {
       };
 
     case EDIT_TODO:
-      console.log("EDIT_TODO:");
       return {
         ...state,
         todos: state.todos.map((todo) => {
