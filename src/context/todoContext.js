@@ -23,8 +23,17 @@ const initialState = {
 export const TodoContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const addTodo = (title) => {
-    dispatch({ type: ADD_TODO, title });
+  const addTodo = async (title) => {
+    const response = await fetch(
+      "https://rn-todoapp-54dc2.firebaseio.com/todos.json",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title }),
+      }
+    );
+    const data = await response.json();
+    dispatch({ type: ADD_TODO, id, title: data.name });
   };
 
   const editTodo = (id, title) => {
@@ -104,10 +113,7 @@ const reducer = (state, action) => {
     case ADD_TODO:
       return {
         ...state,
-        todos: [
-          ...state.todos,
-          { id: Date.now().toString(), title: action.title },
-        ],
+        todos: [...state.todos, { id: action.id, title: action.title }],
       };
 
     case DELETE_TODO:
